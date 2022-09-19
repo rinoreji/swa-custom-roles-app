@@ -37,8 +37,8 @@ namespace Company.Function
             string[] _roles = { "admin","cutom-role","reader","cool" };
             var claims = identities.Claims.Select(c => $"{c.Type}-{c.Value}");
             var lst = new List<string>(_roles);
-            _roles.ToList().AddRange(claims);
-            var roles = _roles.ToArray();
+            lst.AddRange(claims);
+            var roles = lst.ToArray();
             return new JsonResult(new { roles });
         }
     }

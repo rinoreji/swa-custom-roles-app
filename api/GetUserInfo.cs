@@ -21,7 +21,7 @@ namespace Company.Function
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             
-            return new OkObjectResult(requestBody);
+            return new OkObjectResult("requestBody = "+requestBody);
         }
     }
 }
