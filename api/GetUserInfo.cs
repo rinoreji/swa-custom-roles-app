@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Company.Function
 {
@@ -19,8 +20,10 @@ namespace Company.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
+            var headers = string.Join(',', req.Headers.Select(x => $"{x.Key}:{x.Value}"));
+
             var date = DateTime.Now.ToString();
-            return new JsonResult(new { date });
+            return new JsonResult(new { headers });
         }
     }
 }
