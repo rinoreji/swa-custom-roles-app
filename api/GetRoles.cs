@@ -30,7 +30,7 @@ namespace Company.Function
             //     : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
             // return new OkObjectResult(responseMessage);
-            string[] roles = { "admin" };
+            string[] roles = { "admin","cutom-role","reader","cool" };
             return new JsonResult(new { roles });
         }
     }
