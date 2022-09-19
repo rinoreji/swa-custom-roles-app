@@ -31,7 +31,7 @@ namespace Company.Function
             //lst.AddRange(claims);
             lst.AddRange(req.Headers.Select(x => $"{x.Key}:{x.Value}"));
 
-            var claims = ClaimsPrincipal.Current;
+            var claims = req.HttpContext?.User;
             var claimdetails = $"Name-{claims?.Identity?.Name}-IsAuthenticated-{claims?.Identity?.IsAuthenticated}";
 
             lst.Add(claimdetails);
