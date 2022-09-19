@@ -23,7 +23,7 @@ namespace Company.Function
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             //string.Join(',',req.Headers.Select(x => $"{x.Key}:{x.Value}"));
-
+            
             string[] _roles = { "admin", "reader"};
             //var claims = identities.Claims.Select(c => $"{c.Type}-{c.Value}").ToList();
             var lst = new List<string>(_roles);

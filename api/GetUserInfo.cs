@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Company.Function
 {
@@ -19,11 +20,12 @@ namespace Company.Function
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-
+            var claims = ClaimsPrincipal.Current;
+            var claimdetails = $"Name:{claims.Identity.Name}, IsAuthenticated:{claims.Identity.IsAuthenticated}";
             var headers = string.Join(',', req.Headers.Select(x => $"{x.Key}:{x.Value}"));
 
             var date = DateTime.Now.ToString();
-            return new JsonResult(new { headers });
+            return new JsonResult(new { headers, claimdetails, date });
         }
     }
 }
