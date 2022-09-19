@@ -19,8 +19,8 @@ namespace Company.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-
-            return new JsonResult(new { req.HttpContext.User });
+            var date = DateTime.Now.ToString();
+            return new JsonResult(new { date });
         }
     }
 }

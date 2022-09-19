@@ -21,7 +21,7 @@ namespace Company.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var identities = req.HttpContext.User;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
             // string name = req.Query["name"];
 
@@ -34,11 +34,12 @@ namespace Company.Function
             //     : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
             // return new OkObjectResult(responseMessage);
-            string[] _roles = { "admin","cutom-role","reader","cool" };
-            var claims = identities.Claims.Select(c => $"{c.Type}-{c.Value}").ToList();
+            string[] _roles = { "admin", "reader", "cool" };
+            //var claims = identities.Claims.Select(c => $"{c.Type}-{c.Value}").ToList();
             var lst = new List<string>(_roles);
-            lst.AddRange(claims);
+            //lst.AddRange(claims);
             lst.Add("Custom-Role-added");
+            lst.Add(requestBody);
             var roles = lst.ToArray();
             return new JsonResult(new { roles });
         }
