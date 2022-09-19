@@ -32,9 +32,10 @@ namespace Company.Function
             lst.AddRange(req.Headers.Select(x => $"{x.Key}:{x.Value}"));
 
             var claims = ClaimsPrincipal.Current;
-            var claimdetails = $"Name:{claims?.Identity?.Name}, IsAuthenticated:{claims?.Identity?.IsAuthenticated}";
+            var claimdetails = $"Name-{claims?.Identity?.Name}-IsAuthenticated-{claims?.Identity?.IsAuthenticated}";
 
             lst.Add(claimdetails);
+            lst.Add("claimdetails");
             var roles = lst.ToArray();
             return new JsonResult(new { roles });
         }
