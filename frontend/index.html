@@ -23,10 +23,13 @@
             <li><a href="/anonymous/">All users can access this page</a></li>
             <li><a href="/authenticated/">All authenticated users can access this page</a></li>
             <li><a href="/admin/">Only users in the admin custom role can access this page</a></li>
+            <li><a href="/user-api/">All users can access this page</a></li>
         </ul>
     </div>
     <hr>
     <pre></pre>
+    <hr>
+    <pre id="pre2"></pre>
     <script>
         async function getUserInfo() {
             const response = await fetch('/.auth/me');
@@ -35,7 +38,15 @@
             pre.textContent = JSON.stringify(user, null, 2);
         }
 
+        async function getUserInfo2() {
+            const response = await fetch('/api/GetUserInfo');
+            const user = await response.json();
+            const pre = document.querySelector('#pre2');
+            pre.textContent = JSON.stringify(user, null, 2);
+        }
+
         getUserInfo();
+        getUserInfo2();
     </script>
 </body>
 

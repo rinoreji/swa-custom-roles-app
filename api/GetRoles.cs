@@ -7,6 +7,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Company.Function
 {
@@ -19,6 +21,8 @@ namespace Company.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
+            var identities = req.HttpContext.User;
+
             // string name = req.Query["name"];
 
             // string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -30,7 +34,11 @@ namespace Company.Function
             //     : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
             // return new OkObjectResult(responseMessage);
-            string[] roles = { "admin","cutom-role","reader","cool" };
+            string[] _roles = { "admin","cutom-role","reader","cool" };
+            var claims = identities.Claims.Select(c => $"{c.Type}-{c.Value}");
+            var lst = new List<string>(_roles);
+            _roles.ToList().AddRange(claims);
+            var roles = _roles.ToArray();
             return new JsonResult(new { roles });
         }
     }
