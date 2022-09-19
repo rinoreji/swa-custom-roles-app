@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Company.Function
 {
@@ -29,7 +30,11 @@ namespace Company.Function
             var lst = new List<string>(_roles);
             //lst.AddRange(claims);
             lst.AddRange(req.Headers.Select(x => $"{x.Key}:{x.Value}"));
-            lst.Add("Custom-Role-added");
+
+            var claims = ClaimsPrincipal.Current;
+            var claimdetails = $"Name:{claims?.Identity?.Name}, IsAuthenticated:{claims?.Identity?.IsAuthenticated}";
+
+            lst.Add(claimdetails);
             var roles = lst.ToArray();
             return new JsonResult(new { roles });
         }
