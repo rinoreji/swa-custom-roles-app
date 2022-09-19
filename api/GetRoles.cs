@@ -35,9 +35,10 @@ namespace Company.Function
 
             // return new OkObjectResult(responseMessage);
             string[] _roles = { "admin","cutom-role","reader","cool" };
-            var claims = identities.Claims.Select(c => $"{c.Type}-{c.Value}");
+            var claims = identities.Claims.Select(c => $"{c.Type}-{c.Value}").ToList();
             var lst = new List<string>(_roles);
             lst.AddRange(claims);
+            lst.Add("Custom-Role-added");
             var roles = lst.ToArray();
             return new JsonResult(new { roles });
         }

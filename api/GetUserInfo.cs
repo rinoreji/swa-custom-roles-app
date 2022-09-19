@@ -19,9 +19,8 @@ namespace Company.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            
-            return new OkObjectResult("requestBody = "+requestBody);
+
+            return new JsonResult(new { req.HttpContext.User });
         }
     }
 }
