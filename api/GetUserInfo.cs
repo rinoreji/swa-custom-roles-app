@@ -19,13 +19,20 @@ namespace Company.Function
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-            var claims = ClaimsPrincipal.Current;
-            var claimdetails = $"Name:{claims.Identity.Name}, IsAuthenticated:{claims.Identity.IsAuthenticated}";
-            var headers = string.Join(',', req.Headers.Select(x => $"{x.Key}:{x.Value}"));
+            try
+            {
+                log.LogInformation("C# HTTP trigger function processed a request.");
+                var claims = ClaimsPrincipal.Current;
+                var claimdetails = $"Name:{claims.Identity.Name}, IsAuthenticated:{claims.Identity.IsAuthenticated}";
+                var headers = string.Join(',', req.Headers.Select(x => $"{x.Key}:{x.Value}"));
 
-            var date = DateTime.Now.ToString();
-            return new JsonResult(new { headers, claimdetails, date });
+                var date = DateTime.Now.ToString();
+                return new JsonResult(new { headers, claimdetails, date });
+            }
+            catch (Exception exp)
+            {
+                return new JsonResult(new { exp.Message, exp.StackTrace });
+            }
         }
     }
 }
